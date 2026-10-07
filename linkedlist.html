@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>🔗 Linked List Implementation UI 🐱🌻</h2>
+    
+    <form method="POST">
+        <label>Add New Node Data:</label>
+        <input type="text" name="item" placeholder="Type node content (e.g. Cat Node 1)..." required>
+        <button type="submit">Add Node to Linked List 🐾</button>
+    </form>
+
+    <h3 style="margin-top: 30px;">Current Nodes in List:</h3>
+    <div>
+        {% for node in items %}
+            <span class="cat-node">🐱 {{ node }}</span>
+            {% if not loop.last %} ➔ {% endif %}
+        {% else %}
+            <p><em>No nodes added yet. Add one above!</em></p>
+        {% endfor %}
+    </div>
+{% endblock %}
