@@ -49,7 +49,6 @@ class LinkedList:
 
 linked_list = LinkedList()
 
-
 @app.route('/')
 def home():
     return render_template('index.html')
