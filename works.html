@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Works - Sunflower & Cat Portfolio</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fffdd0; color: #333; text-align: center; margin: 0; padding: 20px; }
+        nav a { margin: 0 15px; text-decoration: none; font-weight: bold; color: #d4a373; font-size: 18px; }
+        .card { background: white; padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
+        input, select, button { margin: 5px 0; padding: 8px; width: 100%; box-sizing: border-box; }
+        button { background-color: #d4a373; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #bc8a5f; }
+        .node { display: inline-block; background-color: #e9d8a6; padding: 8px 15px; border-radius: 20px; margin: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a> | 
+        <a href="/profile">Profile</a> | 
+        <a href="/works">Works</a> | 
+        <a href="/contact">Contact</a>
+    </nav>
+
+    <!-- 1. Area of Circle -->
+    <div class="card">
+        <h3>🔵 Area of Circle</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="circle">
+            <input type="number" step="any" name="radius" placeholder="Radius" required>
+            <button type="submit">Calculate Area</button>
+        </form>
+        {% if circle_area is not none %}
+            <p><strong>Result:</strong> {{ circle_area }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 2. Area of Triangle -->
+    <div class="card">
+        <h3>🔺 Area of Triangle</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="triangle">
+            <input type="number" step="any" name="base" placeholder="Base" required>
+            <input type="number" step="any" name="height" placeholder="Height" required>
+            <button type="submit">Calculate Area</button>
+        </form>
+        {% if triangle_area is not none %}
+            <p><strong>Result:</strong> {{ triangle_area }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 3. Simple Calculator -->
+    <div class="card">
+        <h3>🧮 Simple Calculator</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="calculator">
+            <input type="number" step="any" name="num1" placeholder="First Number" required>
+            <select name="operation">
+                <option value="add">+</option>
+                <option value="subtract">-</option>
+                <option value="multiply">×</option>
+                <option value="divide">÷</option>
+            </select>
+            <input type="number" step="any" name="num2" placeholder="Second Number" required>
+            <button type="submit">Compute</button>
+        </form>
+        {% if calc_result is not none %}
+            <p><strong>Result:</strong> {{ calc_result }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 4. Uppercase Converter -->
+    <div class="card">
+        <h3>🔤 Uppercase Converter</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="uppercase">
+            <input type="text" name="text_input" placeholder="Type lowercase or mixed text..." required>
+            <button type="submit">Convert</button>
+        </form>
+        {% if uppercase_text is not none %}
+            <p><strong>Result:</strong> {{ uppercase_text }}</p>
+        {% endif %}
+    </div>
+
+    <!-- 5. Linked List Operations -->
+    <div class="card">
+        <h3>🔗 Linked List UI</h3>
+        <form method="POST">
+            <input type="text" name="item" placeholder="Enter node value..." required>
+            <button type="submit" name="action" value="ll_append">Add Node (Append)</button>
+            <button type="submit" name="action" value="ll_delete" style="background-color: #e63946;">Delete Node</button>
+        </form>
+        <h4>Current Linked List:</h4>
+        <div>
+            {% if ll_items %}
+                {% for item in ll_items %}
+                    <span class="node">{{ item }}</span> {% if not loop.last %} ➔ {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>List is currently empty.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
