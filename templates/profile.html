@@ -1,27 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile - Sunflower & Cat Portfolio</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #fffdd0; color: #333; text-align: center; margin: 0; padding: 20px; }
-        nav a { margin: 0 15px; text-decoration: none; font-weight: bold; color: #d4a373; font-size: 18px; }
-        .card { background: white; padding: 30px; margin: 20px auto; max-width: 600px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="/">Home</a> | 
-        <a href="/profile">Profile</a> | 
-        <a href="/works">Works</a> | 
-        <a href="/contact">Contact</a>
-    </nav>
+{% extends 'base.html' %}
 
-    <div class="card">
-        <h2>👤 Personal Profile</h2>
-        <p><strong>Name:</strong> Dhenz</p>
-        <p><strong>Course:</strong> Computer Science / Information Technology</p>
-        <p><strong>Interests:</strong> Web Development, Flask, Data Structures, Cats 🐱, and Sunflowers 🌻</p>
+{% block title %}Profile{% endblock %}
+{% block window_title %}MY PROFILE{% endblock %}
+
+{% block content %}
+
+<!-- NAME CARD -->
+<section class="name-card">
+    <div class="mini-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span>www.about.me</span>
     </div>
-</body>
-</html>
+    <div class="name-inner">
+        <div class="photo">
+            <img src="{{ url_for('static', filename='css/images/me.jpg.png') }}" alt="Dhenz">
+        </div>
+        <div class="name-text">
+            <h1>Dhenz Salazar</h1>
+            <p class="tagline">Web dev in the making 🐾</p>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT ME -->
+<section class="box">
+    <h3>🌸 About Me</h3>
+    <ul class="info">
+        <li><span class="k">🎓 Course</span><span class="v">Bachelor of Science in Computer Engineering</span></li>
+        <li><span class="k">📅 Year</span><span class="v">2nd Year</span></li>
+        <li><span class="k">🏫 University</span><span class="v">Polytechnic University of the Philippines</span></li>
+    </ul>
+</section>
+
+<!-- MOTTO -->
+<section class="motto">
+    <div class="motto-label">MY MOTTO</div>
+    “Life shouldn't take away that much from you.”
+</section>
+
+{% endblock %}

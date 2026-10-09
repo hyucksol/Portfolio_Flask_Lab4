@@ -1,31 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Works - Sunflower & Cat Portfolio</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #fffdd0; color: #333; text-align: center; margin: 0; padding: 20px; }
-        nav { margin-bottom: 20px; }
-        nav a { margin: 0 15px; text-decoration: none; font-weight: bold; color: #d4a373; font-size: 18px; }
-        .card { background: white; padding: 20px; margin: 20px auto; max-width: 600px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: left; }
-        input, select, button { margin: 5px 0; padding: 8px; width: 100%; box-sizing: border-box; }
-        button { background-color: #d4a373; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        button:hover { background-color: #bc8a5f; }
-        .node { display: inline-block; background-color: #e9d8a6; padding: 8px 15px; border-radius: 20px; margin: 5px; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="/">Home</a> | 
-        <a href="/profile">Profile</a> | 
-        <a href="/works">Works</a> | 
-        <a href="/contact">Contact</a>
-    </nav>
+{% extends 'base.html' %}
 
+{% block title %}Works{% endblock %}
+{% block window_title %}MY WORKS{% endblock %}
+
+{% block content %}
+<div class="center">
     <h2>🌻 My Works 🐾</h2>
+    <p class="subtitle">Select a tool to use:</p>
+</div>
 
-    <!-- 1. Area of Circle -->
-    <div class="card">
+<!-- BUTTONS -->
+<div class="launcher">
+    <button type="button" class="launch-btn {{ 'active' if active_tab == 'circle' }}" data-target="circle"><span class="ico">🔵</span>Circle</button>
+    <button type="button" class="launch-btn {{ 'active' if active_tab == 'triangle' }}" data-target="triangle"><span class="ico">🔺</span>Triangle</button>
+    <button type="button" class="launch-btn {{ 'active' if active_tab == 'upper' }}" data-target="upper"><span class="ico">🔤</span>Uppercase</button>
+    <button type="button" class="launch-btn {{ 'active' if active_tab == 'll' }}" data-target="ll"><span class="ico">🔗</span>Linked List</button>
+</div>
+
+<!-- 1. Area of Circle -->
+<div class="panel {{ 'active' if active_tab == 'circle' }}" id="circle">
+    <div class="box">
         <h3>🔵 Area of Circle</h3>
         <form method="POST">
             <input type="hidden" name="action" value="circle">
@@ -33,12 +27,14 @@
             <button type="submit">Calculate Area</button>
         </form>
         {% if circle_area is not none %}
-            <p><strong>Result:</strong> {{ circle_area }}</p>
+            <p><strong>Result:</strong> <span class="badge">{{ circle_area }}</span></p>
         {% endif %}
     </div>
+</div>
 
-    <!-- 2. Area of Triangle -->
-    <div class="card">
+<!-- 2. Area of Triangle -->
+<div class="panel {{ 'active' if active_tab == 'triangle' }}" id="triangle">
+    <div class="box">
         <h3>🔺 Area of Triangle</h3>
         <form method="POST">
             <input type="hidden" name="action" value="triangle">
@@ -47,32 +43,14 @@
             <button type="submit">Calculate Area</button>
         </form>
         {% if triangle_area is not none %}
-            <p><strong>Result:</strong> {{ triangle_area }}</p>
+            <p><strong>Result:</strong> <span class="badge">{{ triangle_area }}</span></p>
         {% endif %}
     </div>
+</div>
 
-    <!-- 3. Simple Calculator -->
-    <div class="card">
-        <h3>🧮 Simple Calculator</h3>
-        <form method="POST">
-            <input type="hidden" name="action" value="calculator">
-            <input type="number" step="any" name="num1" placeholder="First Number" required>
-            <select name="operation">
-                <option value="add">+</option>
-                <option value="subtract">-</option>
-                <option value="multiply">×</option>
-                <option value="divide">÷</option>
-            </select>
-            <input type="number" step="any" name="num2" placeholder="Second Number" required>
-            <button type="submit">Compute</button>
-        </form>
-        {% if calc_result is not none %}
-            <p><strong>Result:</strong> {{ calc_result }}</p>
-        {% endif %}
-    </div>
-
-    <!-- 4. Uppercase Converter -->
-    <div class="card">
+<!-- 3. Uppercase Converter -->
+<div class="panel {{ 'active' if active_tab == 'upper' }}" id="upper">
+    <div class="box">
         <h3>🔤 Uppercase Converter</h3>
         <form method="POST">
             <input type="hidden" name="action" value="uppercase">
@@ -80,36 +58,66 @@
             <button type="submit">Convert</button>
         </form>
         {% if uppercase_text is not none %}
-            <p><strong>Result:</strong> {{ uppercase_text }}</p>
+            <p><strong>Result:</strong> <span class="badge">{{ uppercase_text }}</span></p>
         {% endif %}
     </div>
+</div>
 
-    <!-- 5. Linked List Operations (Add at Remove) -->
-    <div class="card">
+<!-- 4. Linked List -->
+<div class="panel {{ 'active' if active_tab == 'll' }}" id="ll">
+    <div class="box">
         <h3>🔗 Linked List UI</h3>
-        
+
         {% if message %}
-            <p style="color: #d4a373; font-weight: bold;">{{ message }}</p>
+            <p><span class="badge">{{ message }}</span></p>
         {% endif %}
 
         <form method="POST">
             <input type="text" name="item" placeholder="Enter node value..." required>
-            <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button type="submit" name="action" value="ll_append" style="background-color: #2a9d8f;">➕ Add Node</button>
-                <button type="submit" name="action" value="ll_delete" style="background-color: #e63946;">❌ Remove Node</button>
+            <div class="btn-split">
+                <button type="submit" name="action" value="ll_append">➕ Add Node</button>
+                <button type="submit" name="action" value="ll_delete" class="btn-remove">❌ Remove Node</button>
             </div>
         </form>
 
-        <h4 style="margin-top: 20px;">Current Linked List:</h4>
+        <h4>Current Linked List:</h4>
         <div>
             {% if ll_items %}
                 {% for item in ll_items %}
-                    <span class="node">{{ item }}</span> {% if not loop.last %} ➔ {% endif %}
+                    <span class="cat-node">🐱 {{ item }}</span>
                 {% endfor %}
             {% else %}
                 <p><em>List is currently empty.</em></p>
             {% endif %}
         </div>
     </div>
-</body>
-</html>
+</div>
+
+<script>
+    const btns = document.querySelectorAll('.launch-btn');
+    const panels = document.querySelectorAll('.panel');
+    const hint = document.getElementById('hint');
+
+    function syncHint() {
+        hint.style.display = document.querySelector('.panel.active') ? 'none' : 'block';
+    }
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = document.getElementById(btn.dataset.target);
+            const wasOpen = target.classList.contains('active');
+
+            btns.forEach(b => b.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+
+            if (!wasOpen) {
+                btn.classList.add('active');
+                target.classList.add('active');
+            }
+            syncHint();
+        });
+    });
+
+    syncHint();
+</script>
+{% endblock %}

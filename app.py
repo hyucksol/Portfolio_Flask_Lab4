@@ -1,3 +1,4 @@
+import math
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ class LinkedList:
 
     def delete(self, data):
         curr = self.head
-        
+
         if curr and curr.data == data:
             self.head = curr.next
             return True
@@ -36,8 +37,8 @@ class LinkedList:
         if curr:
             prev.next = curr.next
             return True
-            
-        return False  
+
+        return False
 
     def get_all(self):
         items = []
@@ -48,6 +49,21 @@ class LinkedList:
         return items
 
 linked_list = LinkedList()
+
+TAB_FOR_ACTION = {
+    'circle': 'circle',
+    'triangle': 'triangle',
+    'uppercase': 'upper',
+    'll_append': 'll',
+    'll_delete': 'll',
+}
+
+def to_float(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
 
 @app.route('/')
 def home():
@@ -65,54 +81,46 @@ def contact():
 def works():
     circle_area = None
     triangle_area = None
-    calc_result = None
     uppercase_text = None
     message = None
+    active_tab = None         
 
     if request.method == 'POST':
         action = request.form.get('action')
+        active_tab = TAB_FOR_ACTION.get(action)
 
         # 1. Circle Area
         if action == 'circle':
-            radius = float(request.form.get('radius', 0))
-            circle_area = round(3.14159 * (radius ** 2), 2)
+            radius = to_float(request.form.get('radius'))
+            if radius is None or radius < 0:
+                circle_area = 'Invalid input'
+            else:
+                circle_area = round(math.pi * radius ** 2, 2)
 
         # 2. Triangle Area
         elif action == 'triangle':
-            base = float(request.form.get('base', 0))
-            height = float(request.form.get('height', 0))
-            triangle_area = round(0.5 * base * height, 2)
+            base = to_float(request.form.get('base'))
+            height = to_float(request.form.get('height'))
+            if base is None or height is None or base < 0 or height < 0:
+                triangle_area = 'Invalid input'
+            else:
+                triangle_area = round(0.5 * base * height, 2)
 
-        # 3. Simple Calculator
-        elif action == 'calculator':
-            num1 = float(request.form.get('num1', 0))
-            num2 = float(request.form.get('num2', 0))
-            operation = request.form.get('operation')
-            if operation == 'add':
-                calc_result = num1 + num2
-            elif operation == 'subtract':
-                calc_result = num1 - num2
-            elif operation == 'multiply':
-                calc_result = num1 * num2
-            elif operation == 'divide':
-                calc_result = num1 / num2 if num2 != 0 else 'Cannot divide by zero'
-
-        # 4. Uppercase Converter
+        # 3. Uppercase Converter
         elif action == 'uppercase':
             text = request.form.get('text_input', '')
             uppercase_text = text.upper()
 
-        # 5. Linked List Operations (Add at Remove/Delete)
+        # 4. Linked List Operations (Add / Remove)
         elif action == 'll_append':
-            item = request.form.get('item')
+            item = request.form.get('item', '').strip()
             if item:
                 linked_list.append(item)
                 message = f"Added '{item}' to Linked List."
         elif action == 'll_delete':
-            item = request.form.get('item')
+            item = request.form.get('item', '').strip()
             if item:
-                removed = linked_list.delete(item)
-                if removed:
+                if linked_list.delete(item):
                     message = f"Removed '{item}' from Linked List."
                 else:
                     message = f"Item '{item}' not found in Linked List."
@@ -121,10 +129,10 @@ def works():
         'works.html',
         circle_area=circle_area,
         triangle_area=triangle_area,
-        calc_result=calc_result,
         uppercase_text=uppercase_text,
         ll_items=linked_list.get_all(),
-        message=message
+        message=message,
+        active_tab=active_tab
     )
 
 if __name__ == '__main__':

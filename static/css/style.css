@@ -1,0 +1,519 @@
+:root {
+  --pink: #f8b4c8;
+  --pink-soft: #ffe3ec;
+  --pink-deep: #e8789a;
+  --green: #7bb662;
+  --green-soft: #dcf2cb;
+  --green-dark: #3f7d2c;
+  --brown: #8a5530;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+  color: var(--brown);
+  line-height: 1.6;
+  background-color: #fff7fb;
+
+  /* 1st layer = picture mo (static/images/bg.jpg). Kung wala, plaid ang lalabas. */
+  background-image:
+    url('../images/bg.jpg'),
+    repeating-linear-gradient(0deg,  rgba(168, 216, 142, 0.35) 0 18px, transparent 18px 36px),
+    repeating-linear-gradient(90deg, rgba(248, 180, 200, 0.45) 0 18px, transparent 18px 36px);
+  background-size: cover, auto, auto;
+  background-attachment: fixed;
+}
+
+/* ---------- NAVBAR ---------- */
+nav {
+  background-color: var(--green);
+  padding: 14px;
+  text-align: center;
+  border-bottom: 5px solid var(--pink);
+  box-shadow: 0 4px 8px rgba(63, 125, 44, 0.2);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 8px 18px;
+  margin: 4px;
+  display: inline-block;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background-color: var(--pink);
+  color: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+/* ---------- RETRO WINDOW ---------- */
+.xp-wrap {
+  position: relative;
+  max-width: 860px;
+  margin: 50px auto 30px;
+  padding: 0 14px;
+}
+
+.xp-wrap::after {
+  content: "🌻";
+  position: absolute;
+  top: -30px;
+  right: 6px;
+  font-size: 54px;
+  transform: rotate(14deg);
+  filter: drop-shadow(2px 3px 0 rgba(63, 125, 44, 0.25));
+}
+
+.xp-window {
+  background: #fff;
+  border: 4px solid var(--green-dark);
+  border-radius: 16px;
+  box-shadow: 8px 8px 0 var(--pink);
+  overflow: hidden;
+}
+
+.xp-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: var(--green-soft);
+  border-bottom: 4px solid var(--green-dark);
+}
+
+.xp-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: var(--green-dark);
+  padding-right: 60px;
+}
+
+.dots { display: inline-flex; gap: 6px; }
+.dots i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--green-dark);
+  display: inline-block;
+}
+.dots i:nth-child(1) { background: #ff8fab; }
+.dots i:nth-child(2) { background: #ffe27a; }
+.dots i:nth-child(3) { background: #8fd16b; }
+
+.lace {
+  height: 16px;
+  background: radial-gradient(circle at 10px 0, #fff 9px, #ffc8da 10px);
+  background-size: 20px 16px;
+  background-repeat: repeat-x;
+}
+
+.xp-body {
+  padding: 20px 24px 28px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 19px;
+}
+
+.xp-body h1,
+.xp-body h2,
+.xp-body h3 {
+  font-family: 'Fredoka', sans-serif;
+  color: var(--green-dark);
+}
+
+.xp-body h4 {
+  margin: 22px 0 8px;
+  color: var(--green-dark);
+}
+
+/* ---------- LINKS ---------- */
+.xp-body a {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid var(--pink);
+  transition: 0.2s;
+}
+
+.xp-body a:hover {
+  color: var(--pink-deep);
+  border-bottom-color: var(--green);
+}
+
+/* ---------- NAME CARD (green bubble) ---------- */
+.name-card {
+  background: var(--green);
+  border: 4px solid var(--green-dark);
+  border-radius: 18px;
+  box-shadow: 5px 5px 0 var(--pink);
+  overflow: hidden;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.mini-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: var(--green-soft);
+  border-bottom: 4px solid var(--green-dark);
+  color: var(--green-dark);
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+.name-inner {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 20px 24px;
+}
+
+.photo {
+  flex: 0 0 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--pink-soft);
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 4px var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  overflow: hidden;
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.xp-body .name-text h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  color: #fff;
+  text-shadow: 3px 3px 0 var(--green-dark);
+}
+
+.tagline { margin: 6px 0 12px; font-size: 20px; }
+
+/* ---------- BUTTON LINKS ---------- */
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.xp-body a.btn {
+  display: inline-block;
+  background: var(--pink);
+  color: var(--green-dark);
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 10px 22px;
+  border: 3px solid var(--green-dark);
+  border-radius: 30px;
+  box-shadow: 3px 3px 0 var(--green-dark);
+  transition: 0.2s;
+}
+
+.xp-body a.btn:hover {
+  background: #fff;
+  color: var(--green-dark);
+  transform: translateY(-3px);
+}
+
+/* ---------- BOXES ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.box {
+  background: #fff;
+  border: 3px dashed var(--pink);
+  border-radius: 16px;
+  padding: 14px 20px 18px;
+  margin-bottom: 4px;
+}
+
+.grid .box { margin-bottom: 0; }
+
+.xp-body .box h3 {
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid var(--green-soft);
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--green-dark);
+}
+
+.tc { text-align: center; }
+.center { text-align: center; }
+
+.subtitle {
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* ---------- PROFILE: favorite person, about, loves, song, motto ---------- */
+.fav-person {
+  display: inline-block;
+  margin: 0;
+  padding: 4px 16px;
+  background: var(--pink-soft);
+  color: var(--brown);
+  border-radius: 16px;
+}
+
+.info, .loves { list-style: none; margin: 0; padding: 0; }
+
+.info li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 2px dotted var(--pink);
+}
+.info li:last-child { border-bottom: none; }
+
+.info .k {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--green-dark);
+}
+.info .v { text-align: right; }
+
+.mbti {
+  display: inline-block;
+  background: var(--pink);
+  color: var(--green-dark);
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  letter-spacing: 2px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 2px solid var(--green-dark);
+}
+
+.loves li {
+  padding: 7px 0;
+  border-bottom: 2px dotted var(--pink);
+}
+.loves li:last-child { border-bottom: none; }
+.loves li::before { content: "♥ "; color: #f27a9d; }
+
+.song-box { margin-bottom: 24px; }
+.song-title { margin: 4px 0 12px; font-size: 22px; }
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px;
+  background: var(--green-soft);
+  border: 3px solid var(--green);
+  border-radius: 20px;
+  color: var(--green-dark);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+}
+.player .bar {
+  flex: 1;
+  height: 8px;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.player .fill { width: 40%; height: 100%; background: var(--pink); }
+
+.xp-body .motto {
+  position: relative;
+  margin-top: 8px;
+  padding: 22px 26px 18px;
+  text-align: center;
+  font-size: 23px;
+  color: var(--green-dark);
+  background: var(--green-soft);
+  border: 3px dashed var(--green);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--pink);
+}
+.xp-body .motto::before {
+  content: "🌻";
+  position: absolute;
+  left: -12px;
+  top: -18px;
+  font-size: 32px;
+  transform: rotate(-15deg);
+}
+.motto-label {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  letter-spacing: 3px;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+
+/* ---------- FORMS ---------- */
+input[type=text],
+input[type=number],
+input[type=email],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0 14px;
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 18px;
+  color: var(--brown);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--pink-deep);
+  box-shadow: 0 0 0 3px var(--pink-soft);
+}
+
+button {
+  background-color: var(--green);
+  color: #fff;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: var(--pink);
+  color: var(--green-dark);
+}
+
+.badge {
+  display: inline-block;
+  background-color: var(--green);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+/* ---------- BUTTON LAUNCHER (Works + Contact) ---------- */
+.launcher {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 14px;
+  margin: 18px 0 20px;
+}
+
+.launch-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 14px 10px;
+  font-size: 17px;
+  background: var(--pink-soft);
+  color: var(--green-dark);
+  border: 3px solid var(--green-dark);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0 var(--pink);
+  transition: 0.2s;
+}
+
+.launch-btn .ico { font-size: 34px; line-height: 1.1; }
+
+.launch-btn:hover {
+  background: var(--pink);
+  color: var(--green-dark);
+  transform: translateY(-3px);
+}
+
+.launch-btn.active {
+  background: var(--green);
+  color: #fff;
+  box-shadow: 4px 4px 0 var(--green-dark);
+}
+
+.panel { display: none; margin-top: 6px; }
+.panel.active { display: block; }
+
+.hint {
+  text-align: center;
+  color: var(--green);
+  font-weight: 700;
+  margin: 10px 0 0;
+}
+
+.handle {
+  margin: 4px 0 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 24px;
+  color: var(--brown);
+}
+
+.btn-split { display: flex; gap: 10px; }
+
+.btn-remove { background-color: var(--pink-deep); color: #fff; }
+.btn-remove:hover { background-color: #d15f84; color: #fff; }
+
+/* ---------- LINKED LIST NODES ---------- */
+.cat-node {
+  display: inline-block;
+  background-color: var(--pink-soft);
+  border: 2px solid var(--green-dark);
+  color: var(--green-dark);
+  padding: 6px 14px;
+  margin: 5px 22px 5px 5px;
+  border-radius: 20px;
+  font-weight: 700;
+  position: relative;
+}
+
+.cat-node:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -20px;
+  color: var(--pink-deep);
+  font-size: 20px;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: var(--green-dark);
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .name-inner { flex-direction: column; text-align: center; }
+  .btn-row { justify-content: center; }
+  .xp-title { padding-right: 0; font-size: 22px; }
+  .xp-body { padding: 18px 16px 24px; }
+}
+

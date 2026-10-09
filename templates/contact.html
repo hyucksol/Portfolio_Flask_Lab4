@@ -1,26 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact - Sunflower & Cat Portfolio</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #fffdd0; color: #333; text-align: center; margin: 0; padding: 20px; }
-        nav a { margin: 0 15px; text-decoration: none; font-weight: bold; color: #d4a373; font-size: 18px; }
-        .card { background: white; padding: 30px; margin: 20px auto; max-width: 600px; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body>
-    <nav>
-        <a href="/">Home</a> | 
-        <a href="/profile">Profile</a> | 
-        <a href="/works">Works</a> | 
-        <a href="/contact">Contact</a>
-    </nav>
+{% extends 'base.html' %}
 
-    <div class="card">
-        <h2>📞 Contact Information</h2>
-        <p><strong>GitHub:</strong> <a href="https://github.com/hyucksol/Flask_intro_2026" target="_blank">hyucksol/Flask_intro_2026</a></p>
-        <p><strong>Email:</strong> your_email@example.com</p>
+{% block title %}Contact{% endblock %}
+{% block window_title %}CONTACT{% endblock %}
+
+{% block content %}
+<div class="center">
+    <h2>💌 Contact Me 🐾</h2>
+</div>
+
+<!-- BUTTONS -->
+<div class="launcher">
+    <button type="button" class="launch-btn" data-target="c-facebook"><span class="ico">📘</span>Facebook</button>
+    <button type="button" class="launch-btn" data-target="c-github"><span class="ico">🐙</span>GitHub</button>
+    <button type="button" class="launch-btn" data-target="c-email"><span class="ico">💌</span>Email</button>
+    <button type="button" class="launch-btn" data-target="c-instagram"><span class="ico">📸</span>Instagram</button>
+</div>
+
+<!-- FACEBOOK -->
+<div class="panel" id="c-facebook">
+    <div class="box tc">
+        <h3>📘 Facebook</h3>
+        <p class="handle">Dhenz Salazar</p>
+        <p><a href="https://facebook.com/dhenz.salazar.5" target="_blank" rel="noopener">facebook.com/dhenz.salazar.5</a></p>
     </div>
-</body>
-</html>
+</div>
+
+<!-- GITHUB -->
+<div class="panel" id="c-github">
+    <div class="box tc">
+        <h3>🐙 GitHub</h3>
+        <p class="handle">hyucksol</p>
+        <p><a href="https://github.com/hyucksol" target="_blank" rel="noopener">github.com/hyucksol</a></p>
+    </div>
+</div>
+
+<!-- EMAIL -->
+<div class="panel" id="c-email">
+    <div class="box tc">
+        <h3>💌 Email</h3>
+        <p class="handle">dhenzsalazar13@gmail.com</p>
+        <p><a href="mailto:dhenzsalazar13@gmail.com">Send me an email!</a></p>
+    </div>
+</div>
+
+<!-- INSTAGRAM -->
+<div class="panel" id="c-instagram">
+    <div class="box tc">
+        <h3>📸 Instagram</h3>
+        <p class="handle">@dtlszr</p>
+        <p><a href="https://instagram.com/dtlszr" target="_blank" rel="noopener">instagram.com/dtlszr</a></p>
+    </div>
+</div>
+
+<script>
+    const btns = document.querySelectorAll('.launch-btn');
+    const panels = document.querySelectorAll('.panel');
+    const hint = document.getElementById('hint');
+
+    function syncHint() {
+        hint.style.display = document.querySelector('.panel.active') ? 'none' : 'block';
+    }
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = document.getElementById(btn.dataset.target);
+            const wasOpen = target.classList.contains('active');
+
+            btns.forEach(b => b.classList.remove('active'));
+            panels.forEach(p => p.classList.remove('active'));
+
+            if (!wasOpen) {
+                btn.classList.add('active');
+                target.classList.add('active');
+            }
+            syncHint();
+        });
+    });
+
+    syncHint();
+</script>
+{% endblock %}
