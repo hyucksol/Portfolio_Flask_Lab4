@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> My Portfolio 🌻🐱</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f5e9; /* Soft Sage Green */
+            color: #2e7d32;
+        }
+
+        nav {
+            background-color: #1b5e20; /* Deep Green */
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: #fffde7;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #fbc02d; /* Sunflower Yellow */
+            color: #1b5e20;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            border-top: 8px solid #fbc02d;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+        }
+
+        h1, h2, h3 {
+            color: #2e7d32;
+        }
+
+        input[type=text], input[type=number] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #fbc02d;
+            color: #1b5e20;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #f9a825;
+        }
+
+        .badge {
+            background-color: #fff9c4;
+            color: #f57f17;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .cat-node {
+            display: inline-block;
+            background-color: #fff8e1;
+            border: 2px solid #fbc02d;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">🌻 Home</a>
+        <a href="/profile">🐱 Profile & Contact</a>
+        <a href="/calculators">📐 Area Calculators</a>
+        <a href="/linkedlist">🔗 Linked List</a>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
