@@ -29,6 +29,7 @@
     radial-gradient(ellipse 200px 64px at 18% 78%, #ffffff 0 52%, rgba(255, 255, 255, 0) 72%),
     linear-gradient(180deg, #0a58b0 0%, #1f86e8 38%, #5cc0ff 72%, #bfeaff 100%);
   --bg-dim:      rgba(0, 0, 0, 0);        
+}
 
 * { box-sizing: border-box; }
 
@@ -123,14 +124,12 @@ h1, h2, h3, h4 { font-family: var(--font-title); font-weight: 700; margin: 0; }
 
 .center { text-align: center; }
 
-.subtitle,
-.hint {
+.subtitle {
   margin: 14px 0 0;
   text-align: center;
   font-size: 21px;
 }
 
-.hint { color: var(--red); font-weight: 600; }
 
 /* ---------- SCROLL ---------- */
 .scroll {
@@ -188,15 +187,6 @@ h1, h2, h3, h4 { font-family: var(--font-title); font-weight: 700; margin: 0; }
 }
 .box a:hover { color: var(--wood-mid); border-bottom-color: var(--wood-mid); }
 
-.tc { text-align: center; }
-
-.handle {
-  margin: 4px 0 8px;
-  font-family: var(--font-title);
-  font-size: 30px;
-  font-weight: 700;
-  color: var(--red);
-}
 
 /* ---------- BUTTONS ---------- */
 button {
@@ -262,8 +252,7 @@ select:focus {
 }
 
 /* ---------- PLAQUE BUTTONS (Home, Works, Contact) ---------- */
-.plaque,
-.launch-btn {
+.plaque {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -284,29 +273,11 @@ select:focus {
 .plaque { width: 150px; padding: 14px 8px 12px; font-size: 26px; }
 .plaque .ico { font-size: 32px; line-height: 1.1; }
 
-.plaque:hover,
-.launch-btn:hover {
+.plaque:hover {
   transform: translateY(-6px);
   filter: brightness(1.07);
 }
 
-.launcher {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 14px;
-  margin: 22px 0 14px;
-}
-
-.launch-btn { width: 100%; padding: 12px 8px 10px; font-size: 22px; }
-.launch-btn .ico { font-size: 30px; line-height: 1.1; }
-
-.launch-btn.active {
-  background: #fff0b8;
-  box-shadow: inset 0 0 0 3px var(--wood-mid), 0 0 0 4px var(--gold), 0 6px 0 var(--wood-mid);
-}
-
-.drawer { display: none; margin-top: 12px; }
-.drawer.active { display: block; animation: rise 0.35s ease both; }
 
 /* ---------- HOME (title screen) ---------- */
 .title-screen {
@@ -459,9 +430,6 @@ select:focus {
   box-shadow: inset 0 0 0 2px #fde0b0;
 }
 
-.pair { display: flex; justify-content: center; gap: 26px; }
-
-.mini { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 17px; }
 
 .slot {
   position: relative;
@@ -472,35 +440,6 @@ select:focus {
   box-shadow: inset 0 0 0 2px var(--wood-light);
 }
 
-.slot.icon {
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-}
-
-.year-box {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 10px 12px;
-  background: var(--parchment-soft);
-  border: 4px solid var(--wood);
-  border-radius: 6px;
-  box-shadow: inset 0 0 0 2px var(--wood-mid);
-}
-.year-label {
-  padding: 0 18px;
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--red);
-  border-bottom: 3px dotted var(--wood-light);
-}
-.year-value { font-size: 26px; font-weight: 700; text-align: center; }
 
 .right { min-width: 0; }
 
@@ -521,19 +460,6 @@ select:focus {
 
 .loves-row { display: flex; align-items: flex-start; gap: 10px; }
 
-.heart-box {
-  flex: 0 0 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  color: var(--heart);
-  background: #f0b86e;
-  border: 4px solid var(--wood-mid);
-  border-radius: 4px;
-  box-shadow: inset 0 0 0 2px var(--wood-light);
-}
 
 .film { flex: 1; min-width: 0; text-align: center; }
 
@@ -572,20 +498,6 @@ select:focus {
 
 .stars { margin: 4px 0 0; font-size: 17px; color: var(--red); letter-spacing: 1px; }
 
-.friends { margin-top: 20px; text-align: center; }
-
-.friends-row {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
-  padding: 10px 10px 4px;
-  background: var(--parchment-soft);
-  border: 4px solid var(--wood);
-  border-radius: 6px;
-  box-shadow: inset 0 0 0 2px var(--wood-mid);
-}
-
-.friend-heart { height: 26px; font-size: 22px; line-height: 26px; color: var(--heart); }
 
 .motto-plaque {
   position: relative;
@@ -681,9 +593,7 @@ footer {
   .book { padding: 20px 14px 24px; }
   .villager { grid-template-columns: 1fr; }
   .left { max-width: 260px; margin: 0 auto; }
-  .friends-row { grid-template-columns: repeat(3, 1fr); }
   .loves-row { flex-wrap: wrap; }
-  .heart-box { flex: 0 0 100%; }
   .btn-split { flex-wrap: wrap; }
   .plaque { width: 140px; }
 }
@@ -692,24 +602,6 @@ footer {
                           WORKS
    ========================================================= */
 
-/* ---------- BUTTON PICTURES ---------- */
-.pic {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-}
-.pic img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  image-rendering: pixelated;       /* keeps pixel art crisp */
-}
 
 /* ---------- OPERATIONS PANEL ---------- */
 .ops-title {
@@ -814,34 +706,6 @@ button.op { width: auto; padding: 7px 18px; font-size: 20px; }
 }
 .chip.done { background: #bfe8a0; border-color: #3f7d2c; box-shadow: inset 0 0 0 2px #e4f7d2; }
 
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  height: 200px;
-  margin: 14px 0;
-  padding: 30px 8px 0;
-  background: #fff3d6;
-  border: 4px solid var(--wood);
-  box-shadow: inset 0 0 0 2px var(--wood-mid);
-}
-.bar {
-  position: relative;
-  flex: 1;
-  min-width: 16px;
-  background: linear-gradient(var(--wood-light), var(--wood));
-  border: 3px solid var(--wood-mid);
-  border-bottom: none;
-}
-.bar span {
-  position: absolute;
-  top: -26px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 700;
-  white-space: nowrap;
-}
 
 details { margin-top: 12px; }
 summary { cursor: pointer; font-weight: 700; color: var(--red); }
@@ -1066,9 +930,6 @@ textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--wood-mid), 0 0
 .film .ttl { margin-top: 4px; font-size: 16px; line-height: 1.15; }
 .subtitle { margin-bottom: 18px; }
 
-.bar.changed { background: linear-gradient(#ffd84a, var(--wood-light)); border-color: var(--red); }
-.bar.done    { background: linear-gradient(#bfe8a0, #6dbb4f); border-color: #3f7d2c; }
-.step-now { margin: 0 0 10px; text-align: center; font-weight: 700; color: var(--red); }
 
 /* -------------------- */
 .likes-box {
@@ -1088,24 +949,6 @@ textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--wood-mid), 0 0
   color: var(--red);
   border-bottom: 3px dotted var(--wood-light);
 }
-.likes-box .likes-head ~ .likes-head { margin-top: 14px; }
-.like-item { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 18px; line-height: 1.15; }
-.slot.like-pic {
-  flex: 0 0 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-.like-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-
-/* =========================================================
-   SIDE-BY-SIDE BOXES (Stack, Queue, Area)
-   ========================================================= */
-.pair-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
-.pair-boxes > .box { margin-bottom: 0; }
-@media (max-width: 900px) { .pair-boxes { grid-template-columns: 1fr; } }
 
 
 /* =========================================================
@@ -1167,14 +1010,10 @@ textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--wood-mid), 0 0
 /* =========================================================
    PROFILE
    ========================================================= */
-/* portrait and info | biography and favorites | loves and hates */
+/* portrait and pets | biography and personal info | films and books */
 .villager { grid-template-columns: 260px 1fr 290px; gap: 26px; }
 .side { display: flex; flex-direction: column; gap: 14px; }
 
-/* films and albums side by side to keep page height shorter */
-.love-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.love-grid .loves-row { gap: 8px; }
-.love-grid .heart-box { flex: 0 0 34px; height: 34px; font-size: 20px; }
 
 @media (max-width: 1150px) {
     .villager { grid-template-columns: 230px 1fr; }
@@ -1182,7 +1021,6 @@ textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--wood-mid), 0 0
 }
 @media (max-width: 700px) {
     .villager { grid-template-columns: 1fr; }
-    .love-grid { grid-template-columns: 1fr; }
 }
 
 
@@ -1223,7 +1061,6 @@ textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--wood-mid), 0 0
     .contact-grid { grid-template-columns: 1fr; }        
     .contact-card { flex: none; }
 }
-
 
 
 /* =========================================================
@@ -1415,7 +1252,8 @@ button.algo.on { background: #fff0b8; border-color: var(--red); box-shadow: inse
  PROFILE: equal 3-column height with no empty gaps
  (tallest column sets the height; shorter ones stretch to match)
  ========================================================= */
-.villager { grid-template-columns: 260px 1fr 320px; align-items: stretch; }
+.villager { align-items: stretch; }
+@media (min-width: 1151px) { .villager { grid-template-columns: 260px 1fr 320px; } }   /* 3 columns on wide screens only */
 
 /* left column: pets box stretches, each pet on one line */
 .left .pets-box { flex: 1; display: flex; flex-direction: column; }
@@ -1427,7 +1265,7 @@ button.algo.on { background: #fff0b8; border-color: var(--red); box-shadow: inse
 
 /* middle column: Biography and Personal Info share the remaining height */
 .right { display: flex; flex-direction: column; }
-.right .bio { flex: 3 1 0; display: flex; flex-direction: column; margin-bottom: 14px; }   /* 3 linya */
+.right .bio { flex: 3 1 0; display: flex; flex-direction: column; margin-bottom: 14px; }   /* 3 lines */
 .right .bio li { flex: 1; display: flex; align-items: center; }
 .info-grid { flex: 4 1 0; display: grid;  
     grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; column-gap: 22px; }
@@ -1453,3 +1291,33 @@ button.algo.on { background: #fff0b8; border-color: var(--red); box-shadow: inse
 
 /* CONTACT CARD IMAGES (replaces emoji) */
 .contact-card .ico-img { flex: 0 0 auto; width: 48px; height: 48px; object-fit: contain; }
+
+/* =========================================================
+   PHONE / TABLET: Profile and Home
+   (kept at the very end so the rules above cannot override it)
+   ========================================================= */
+@media (max-width: 1150px) {
+    /* Films and Books side by side at the bottom, instead of huge stacked posters */
+    .side .loves-box { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .love-sec + .love-sec { margin-top: 0; }
+}
+
+@media (max-width: 700px) {
+    /* ----- PROFILE: single column ----- */
+    .villager { grid-template-columns: 1fr; gap: 18px; }
+    .left { width: 100%; max-width: 340px; margin: 0 auto; }
+    .right .bio { flex: none; }
+    .right .bio li { flex: none; padding: 8px 0; }
+    .info-grid { flex: none; grid-template-columns: 1fr; grid-auto-rows: auto; }
+    .info-item { padding: 8px 0; }
+    .pets-list { gap: 12px; padding: 6px 0; }
+    .side .loves-box { grid-template-columns: 1fr; gap: 18px; }
+    .love-sec .loves-row { flex: none; }
+
+    /* ----- HOME: sign, welcome box and buttons share the same width ----- */
+    .title-screen { justify-content: center; gap: 5vh; min-height: 86vh; }
+    .sign-board h1 { font-size: 13vw; }
+    .welcome { width: 94vw; max-width: 94vw; box-sizing: border-box; }
+    .menu-row { width: 94vw; gap: 14px; }
+    .plaque { padding: 16px 6px 14px; }
+}
