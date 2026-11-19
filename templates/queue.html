@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Queue and Dequeue{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">Queue and Dequeue</div>
+    <p class="subtitle">Insert and remove items from a single-ended or a double-ended queue.</p>
+</div>
+
+<!-- SINGLE-ENDED QUEUE -->
+<div class="box">
+    <h3>🚶 Queue (single-ended)</h3>
+    <p class="desc">First In, First Out. New items join at the <b>rear</b> and leave from the <b>front</b>.</p>
+
+    {% if queue_message %}
+        <p class="center"><span class="badge">{{ queue_message }}</span></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('works_queue') }}">
+        <label class="field">Value</label>
+        <input type="text" name="value" placeholder="e.g. 25">
+
+        <div class="op-row">
+            <button class="op" name="action" value="enqueue">Enqueue</button>
+            <button class="op btn-remove" name="action" value="dequeue">Dequeue</button>
+            <button class="op" name="action" value="q_peek">Peek front</button>
+            <button class="op" name="action" value="q_clear">Clear queue</button>
+        </div>
+    </form>
+
+    <h4>Queue (front → rear):</h4>
+    <div class="nodes">
+        {% if queue_items %}
+            {% for item in queue_items %}
+                <span class="node">{% if loop.first %}<span class="top-tag">FRONT</span>{% endif %}🌾 {{ item }}{% if loop.last %} <span class="top-tag rear">REAR</span>{% endif %}</span>
+            {% endfor %}
+        {% else %}
+            <p><em>Queue is currently empty.</em></p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- DOUBLE-ENDED QUEUE -->
+<div class="box">
+    <h3>↔️ Double-Ended Queue (Deque)</h3>
+    <p class="desc">Items can be added or removed at <b>both</b> the front and the rear.</p>
+
+    {% if deque_message %}
+        <p class="center"><span class="badge">{{ deque_message }}</span></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('works_queue') }}">
+        <label class="field">Value</label>
+        <input type="text" name="value" placeholder="e.g. 25">
+
+        <p class="op-label">FRONT</p>
+        <div class="op-row">
+            <button class="op" name="action" value="add_front">Add front</button>
+            <button class="op btn-remove" name="action" value="remove_front">Remove front</button>
+            <button class="op" name="action" value="peek_front">Peek front</button>
+        </div>
+
+        <p class="op-label">REAR</p>
+        <div class="op-row">
+            <button class="op" name="action" value="add_rear">Add rear</button>
+            <button class="op btn-remove" name="action" value="remove_rear">Remove rear</button>
+            <button class="op" name="action" value="peek_rear">Peek rear</button>
+        </div>
+
+        <p class="op-label">LIST</p>
+        <div class="op-row">
+            <button class="op" name="action" value="dq_clear">Clear deque</button>
+        </div>
+    </form>
+
+    <h4>Deque (front ↔ rear):</h4>
+    <div class="nodes">
+        {% if deque_items %}
+            {% for item in deque_items %}
+                <span class="node two-way">{% if loop.first %}<span class="top-tag">FRONT</span>{% endif %}🌾 {{ item }}{% if loop.last %} <span class="top-tag rear">REAR</span>{% endif %}</span>
+            {% endfor %}
+        {% else %}
+            <p><em>Deque is currently empty.</em></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

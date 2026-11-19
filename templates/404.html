@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Not found{% endblock %}
+{% block content %}
+<div class="center">
+    <div class="scroll">404</div>
+    <p class="subtitle">That page wandered off into the valley.</p>
+    <a class="back" href="{{ url_for('home') }}">← Back home</a>
+</div>
+{% endblock %}

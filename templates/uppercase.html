@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}toUpperCase{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">toUpperCase</div>
+    <p class="subtitle">Turns any text you type into capital letters.</p>
+</div>
+
+<div class="box">
+    <h3>🔤 Uppercase Converter</h3>
+    <form method="POST" action="{{ url_for('works_uppercase') }}">
+        <input type="text" name="text_input" placeholder="Type lowercase or mixed text..." required autofocus>
+        <button type="submit">Convert</button>
+    </form>
+    {% if uppercase_result is defined and uppercase_result is not none %}
+        <p><strong>Result:</strong> <span class="badge">{{ uppercase_result }}</span></p>
+    {% endif %}
+</div>
+{% endblock %}

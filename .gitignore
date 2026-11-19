@@ -1,0 +1,6 @@
+gmail_settings.py
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/

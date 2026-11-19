@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Area Calculator{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">Area Calculator</div>
+    <p class="subtitle">Enter dimensions and get the area of a circle or a triangle.</p>
+</div>
+
+<div class="box">
+    <h3>🔵 Area of Circle</h3>
+    <form method="POST" action="{{ url_for('works_circle') }}">
+        <input type="hidden" name="action" value="circle">
+        <input type="number" step="any" name="radius" placeholder="Radius" required>
+        <button type="submit">Calculate Area</button>
+    </form>
+    {% if circle_result is defined and circle_result is not none %}
+        <p><strong>Result:</strong> <span class="badge">{{ circle_result }}</span></p>
+    {% endif %}
+</div>
+
+<div class="box">
+    <h3>🔺 Area of Triangle</h3>
+    <form method="POST" action="{{ url_for('works_triangle') }}">
+        <input type="hidden" name="action" value="triangle">
+        <input type="number" step="any" name="base" placeholder="Base" required>
+        <input type="number" step="any" name="height" placeholder="Height" required>
+        <button type="submit">Calculate Area</button>
+    </form>
+    {% if triangle_result is defined and triangle_result is not none %}
+        <p><strong>Result:</strong> <span class="badge">{{ triangle_result }}</span></p>
+    {% endif %}
+</div>
+{% endblock %}

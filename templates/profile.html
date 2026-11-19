@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+{% set info = [
+    ('Nickname', 'Dhenzy'),
+    ('Birthday', 'April 7, 2007'),
+    ('Age', '19'),
+    ('Zodiac Sign', 'Aries'),
+    ('MBTI', 'ENFP-T'),
+    ('Pronouns', 'She/Her'),
+    ('Hometown / Location', 'Antipolo, PH'),
+    ('Favorite Color', 'Green')
+] %}
+{% set pets = [
+    {'name': 'Shadow', 'img': 'p1', 'emoji': '🐾'},
+    {'name': 'Casper', 'img': 'p2', 'emoji': '🐾'},
+    {'name': 'Shaper', 'img': 'p3', 'emoji': '🐾'}
+] %}
+{% set films = [
+    {'title': 'Dead Poets Society', 'img': 'f1', 'rating': 5},
+    {'title': 'Forrest Gump', 'img': 'f2', 'rating': 5},
+    {'title': 'Perfect Days', 'img': 'f3', 'rating': 5}
+] %}
+{% set books = [
+    {'title': 'Twilight', 'img': 'b1', 'rating': 5},
+    {'title': 'The Body', 'img': 'b2', 'rating': 5},
+    {'title': 'Breaking Dawn', 'img': 'b3', 'rating': 5}
+] %}
+
+{% macro love_section(label, icon, folder, items) %}
+<div class="love-sec">
+    <p class="likes-head">{{ icon }} {{ label }}</p>
+    <div class="loves-row">
+        {% for m in items[:3] %}
+        {% set pic = image_url(folder, m.img) %}
+        <div class="film">
+            <div class="slot poster">
+                {{ icon }}
+                {% if pic %}<img src="{{ pic }}" alt="">{% endif %}
+                <div class="cap">{{ m.title }}</div>
+            </div>
+            <div class="ttl">{{ m.title }}</div>
+            <p class="stars">{{ '★' * (m.rating|int) }}{{ '½' if (m.rating - (m.rating|int)) >= 0.5 }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro pets_box(items) %}
+<div class="likes-box pets-box">
+    <p class="likes-head">🐾 My Pets</p>
+    <div class="pets-list">
+        {% for pet in items %}
+        {% set pic = image_url('pets', pet.img) %}
+        <div class="pet">
+            <div class="slot pet-pic">
+                {{ pet.emoji }}
+                {% if pic %}<img src="{{ pic }}" alt="{{ pet.name }}">{% endif %}
+            </div>
+            <span class="pet-name">{{ pet.name }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+
+<div class="villager">
+
+    <!-- portrait, pets -->
+    <aside class="left">
+        {% set me = image_url('', 'me') %}
+        <div class="portrait">
+            🧑‍🌾
+            {% if me %}<img src="{{ me }}" alt="">{% endif %}
+        </div>
+
+        <div class="nameplate">Dhenz Salazar</div>
+
+        {{ pets_box(pets) }}
+    </aside>
+
+    <!-- biography and personal info -->
+    <section class="right">
+        <div class="scroll">Biography</div>
+        <ul class="bio">
+            <li>Bachelor of Science in Computer Engineering</li>
+            <li>Studies at Polytechnic University of the Philippines</li>
+            <li>2nd Year Student</li>
+        </ul>
+
+        <div class="scroll">Personal Info</div>
+        <div class="info-grid">
+            {% for label, value in info %}
+            <div class="info-item"><span><b>{{ label }}:</b> {{ value }}</span></div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- films and books -->
+    <aside class="side">
+        <div class="likes-box loves-box">
+            {{ love_section('Films I love', '🎞️', 'movies', films) }}
+            {{ love_section('Books I love', '📚', 'books', books) }}
+        </div>
+    </aside>
+
+</div>
+
+<!-- MOTTO -->
+<div class="motto-plaque">
+    <span class="motto-label">MOTTO</span>
+    “Live Unapologetically!”
+</div>
+
+{% endblock %}

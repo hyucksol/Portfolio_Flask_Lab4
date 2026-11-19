@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block tabs %}{% endblock %}
+{% block main_class %}title-screen{% endblock %}
+{% block body_class %}page-home{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<span class="sparkle s1">✦</span>
+<span class="sparkle s2">✦</span>
+<span class="sparkle s3">✦</span>
+<span class="sparkle s4">✦</span>
+
+<!-- TITLE SIGN -->
+<div class="sign-board">
+    <i class="nail n1"></i><i class="nail n2"></i><i class="nail n3"></i><i class="nail n4"></i>
+    <span class="leaf l1">🍃</span>
+    <span class="leaf l2">🍃</span>
+    <h1>Dhenz's<br>Portfolio</h1>
+</div>
+
+<p class="welcome">Hi! Feel free to check out my profile, browse my works, and find my contacts below.</p>
+
+{% macro plaque(href, label, folder_key, emoji, external=false) %}
+{% set pic = image_url('menu', folder_key) %}
+<a class="plaque" href="{{ href }}"{% if external %} target="_blank" rel="noopener"{% endif %}>
+    <span class="lbl">{{ label }}</span>
+    {% if pic %}<img class="ico-img" src="{{ pic }}" alt="">{% else %}<span class="ico">{{ emoji }}</span>{% endif %}
+</a>
+{% endmacro %}
+
+<div class="menu-row">
+    {{ plaque(url_for('profile'), 'PROFILE', 'profile', '🌱') }}
+    {{ plaque(url_for('works'),   'WORKS',   'works',   '🍓') }}
+    {{ plaque(url_for('contact'), 'CONTACT', 'contact', '🌍') }}
+    {{ plaque('https://github.com/hyucksol', 'GITHUB', 'github', '🐥', true) }}
+</div>
+{% endblock %}

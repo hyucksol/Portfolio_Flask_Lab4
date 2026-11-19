@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<div class="center">
+    <div class="scroll">Contact</div>
+</div>
+
+{# Isang contact card. Picture: ilagay sa static/images/contact/ at pangalanan ng
+   facebook, github, email, linkedin (.png .jpg .jpeg .gif .webp). Kapag wala, emoji ang lalabas. #}
+{% macro contact_card(href, key, emoji, name, text, external=true) %}
+{% set pic = image_url('contact', key) %}
+<a class="contact-card" href="{{ href }}"{% if external %} target="_blank" rel="noopener"{% endif %}>
+    {% if pic %}<img class="ico-img" src="{{ pic }}" alt="">{% else %}<span class="ico">{{ emoji }}</span>{% endif %}
+    <span class="txt"><b>{{ name }}</b><small>{{ text }}</small></span>
+</a>
+{% endmacro %}
+
+<div class="contact-grid">
+
+    <!-- MESSAGE FORM -->
+    <section class="contact-form">
+        <div class="box">
+            <h3>✉️ Send me a message</h3>
+
+            {% for note in get_flashed_messages() %}
+                <p class="notice">{{ note }}</p>
+            {% endfor %}
+            {% if error %}
+                <p class="notice bad">{{ error }}</p>
+            {% endif %}
+
+            <form method="POST" action="{{ url_for('contact') }}">
+                <input type="hidden" name="csrf" value="{{ csrf_token() }}">
+            
+                <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
+
+                <label class="field">Your name</label>
+                <input type="text" name="name" maxlength="80" required value="{{ form.get('name', '') }}" placeholder="e.g. Juan Dela Cruz">
+
+                <label class="field">Your email <small>(so I can reply)</small></label>
+                <input type="email" name="email" maxlength="120" required value="{{ form.get('email', '') }}" placeholder="you@example.com">
+
+                <label class="field">Subject <small>(optional)</small></label>
+                <input type="text" name="subject" maxlength="100" value="{{ form.get('subject', '') }}" placeholder="e.g. Hello!">
+
+                <label class="field">Message</label>
+                <textarea name="message" maxlength="2000" required placeholder="Write your message here...">{{ form.get('message', '') }}</textarea>
+
+                <button type="submit">Send message ✉️</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="contact-links">
+        <p class="subtitle">Find me here:</p>
+        <div class="contact-cards">
+            {{ contact_card('https://www.facebook.com/dhenz.salazar.5', 'facebook', '📘', 'Facebook', 'facebook.com/dhenz.salazar.5') }}
+            {{ contact_card('https://github.com/hyucksol', 'github', '🐙', 'GitHub', 'https://github.com/hyucksol') }}
+            {{ contact_card('mailto:' ~ (my_email or 'dhenzsalazar13@gmail.com'), 'email', '💌', 'Email', my_email or 'dhenzsalazar13@gmail.com', false) }}
+            {{ contact_card('https://www.linkedin.com/in/dhenz-salazar-47629a43a', 'linkedin', '🌐', 'LinkedIn', 'Dhenz Salazar') }}
+        </div>
+    </section>
+
+</div>
+{% endblock %}

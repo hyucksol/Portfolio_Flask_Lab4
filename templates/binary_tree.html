@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Binary Tree{% endblock %}
+
+{% block content %}
+{% macro draw(node) %}
+<li>
+    <span class="tnode">{{ node.value }}</span>
+    {% if node.left or node.right %}
+    <ul>
+        {% if node.left %}{{ draw(node.left) }}{% else %}<li><span class="tnode empty">·</span></li>{% endif %}
+        {% if node.right %}{{ draw(node.right) }}{% else %}<li><span class="tnode empty">·</span></li>{% endif %}
+    </ul>
+    {% endif %}
+</li>
+{% endmacro %}
+
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">Binary Tree</div>
+    <p class="subtitle">Build a tree and see its preorder, inorder and postorder traversals.</p>
+</div>
+
+<div class="box">
+    <h3>🌳 Binary Tree</h3>
+    <p class="desc">Create the root, then add left and right children to any node. Traversals are shown below the tree.</p>
+
+    {% if tree_message %}
+        <p class="center"><span class="badge">{{ tree_message }}</span></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('works_binary_tree') }}">
+        <div class="two">
+            <div>
+                <label class="field">New value</label>
+                <input type="text" name="value" placeholder="e.g. A">
+            </div>
+            <div>
+                <label class="field">Parent value <small>(for left / right)</small></label>
+                <input type="text" name="parent" placeholder="e.g. R">
+            </div>
+        </div>
+
+        <p class="op-label">INSERT</p>
+        <div class="op-row">
+            <button class="op" name="action" value="tree_root">Set root</button>
+            <button class="op" name="action" value="tree_left">Insert left</button>
+            <button class="op" name="action" value="tree_right">Insert right</button>
+        </div>
+
+        <p class="op-label">TREE</p>
+        <div class="op-row">
+            <button class="op" name="action" value="tree_sample">Load sample</button>
+            <button class="op" name="action" value="tree_clear">Clear tree</button>
+        </div>
+    </form>
+
+    <h4>Tree:</h4>
+    {% if tree_data %}
+        <div class="tree"><ul>{{ draw(tree_data) }}</ul></div>
+
+        <h4>Traversals</h4>
+        <p class="trav"><b>Preorder</b> (root, left, right): {{ tree_pre }}</p>
+        <p class="trav"><b>Inorder</b> (left, root, right): {{ tree_in }}</p>
+        <p class="trav"><b>Postorder</b> (left, right, root): {{ tree_post }}</p>
+    {% else %}
+        <p><em>The tree is currently empty.</em></p>
+    {% endif %}
+</div>
+{% endblock %}

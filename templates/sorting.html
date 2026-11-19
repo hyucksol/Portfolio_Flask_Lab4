@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Sorting Visualizer{% endblock %}
+
+{% block head %}
+{% if sort_play and sort_view %}
+<noscript><meta http-equiv="refresh" content="{{ sort_view.delay }}; url={{ url_for('works_sorting', _anchor='visualizer', numbers=sort_input, algorithm=sort_algo, order=sort_order, speed=sort_speed, step=sort_view.step + 1, play=1, depth=(1 if sort_depth else 0)) }}"></noscript>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% macro go(step, play=0, speed=0, depth=none) -%}
+{{ url_for('works_sorting', _anchor='visualizer', numbers=sort_input, algorithm=sort_algo, order=sort_order, speed=(speed or sort_speed), step=step, play=play, depth=(1 if (sort_depth if depth is none else depth) else 0)) }}
+{%- endmacro %}
+
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">Sorting Visualizer</div>
+    <p class="subtitle">Explore step-by-step sorting: bubble, selection, insertion, merge and quick.</p>
+</div>
+
+<div class="box">
+    <h3>📊 Sorting</h3>
+    <p class="desc">Type your numbers separated by commas, then press the sorting algorithm you want to watch. Use <b>Play</b> to see it move, and the <b>speed</b> numbers to slow it down. Use <b>Compare all</b> to see which algorithm does the least work.</p>
+
+    {% if sort_error %}
+        <p class="center"><span class="badge bad">{{ sort_error }}</span></p>
+    {% endif %}
+
+    <form method="GET" action="{{ url_for('works_sorting', _anchor='visualizer') }}">
+        <input type="hidden" name="speed" value="{{ sort_speed or 5 }}">
+        <input type="hidden" name="depth" value="{{ 1 if sort_depth else 0 }}">
+
+        <label class="field">Numbers <small>(separated by commas)</small></label>
+        <input type="text" name="numbers" value="{{ sort_input or '' }}" placeholder="e.g. 64, 25, 12, 22, 11">
+
+        <label class="field">Order</label>
+        <select name="order">
+            <option value="asc" {{ 'selected' if sort_order != 'desc' }}>Ascending (small → big)</option>
+            <option value="desc" {{ 'selected' if sort_order == 'desc' }}>Descending (big → small)</option>
+        </select>
+
+        <p class="op-label">PICK AN ALGORITHM</p>
+        <div class="op-row">
+            {% for key, name in sort_algorithms %}
+            <button class="op algo {{ 'on' if sort_result and sort_algo == key }}" name="algorithm" value="{{ key }}">{{ name }}</button>
+            {% endfor %}
+        </div>
+
+        <p class="op-label">OTHER</p>
+        <div class="op-row">
+            <button class="op" name="action" value="compare">Compare all</button>
+            <button class="op" name="action" value="random">Random numbers</button>
+        </div>
+    </form>
+
+    <!-- RESULT OF AN ALGORITHM -->
+    {% if sort_result and sort_view %}
+        {% set v = sort_view %}
+        <div id="sv-app"{% if sort_play %} data-next="{{ go(v.step + 1, 1) }}" data-delay="{{ v.delay }}"{% endif %}>
+
+        <div class="sv-now" id="visualizer">
+            <span class="sv-now-tag">NOW SHOWING</span>
+            <span>{{ sort_result.name }}</span>
+            <span class="badge">{{ 'Descending' if sort_order == 'desc' else 'Ascending' }}</span>
+            <span class="cx">{{ sort_result.complexity }}</span>
+        </div>
+        <p class="sv-about">{{ sort_result.about }}</p>
+        <p class="center">
+            <span class="badge">Total comparisons: <b>{{ sort_result.comparisons }}</b></span>
+            <span class="badge">Total moves: <b>{{ sort_result.moves }}</b></span>
+        </p>
+
+        <div class="sv-legend">
+            <span><i style="background:#f0b86e"></i>Not sorted yet</span>
+            <span><i style="background:#ffd84a"></i>Comparing</span>
+            <span><i style="background:#f2763e"></i>Moving / swapped</span>
+            <span><i style="background:#a98bf0"></i>Pivot / being placed</span>
+            <span><i style="background:#6dbb4f"></i>Sorted</span>
+        </div>
+
+        {% if v.has_depth %}<p class="sv-depth-note {{ 'show' if v.depth_on }}">{{ v.depth_note }}</p>{% endif %}
+
+        <div class="sv-wrap">
+            <div class="sv-stage {{ 'lots' if v.count > 30 else ('many' if v.count > 20) }} {{ 'depth-on' if v.depth_on }}" style="--dur: {{ v.duration }}s; --room: {{ v.max_depth * 46 }}px">
+                {% for b in v.bars %}
+                <div class="sv-bar {{ b.cls }} {{ 'slide' if b.k }}"
+                     style="height: {{ b.height }}%; left: calc({{ b.left }}% + 2px); width: calc({{ v.width }}% - 4px); --k: {{ b.k }}; --hn: {{ b.height }}; --lift: {{ (v.max_depth - b.dep) * 46 }}px; --hue: {{ b.hue }};"><span>{{ b.value }}</span></div>
+                {% endfor %}
+            </div>
+            <div class="sv-index">
+                {% for number in v.positions %}
+                <b style="left: {{ ((number - 1) * v.width)|round(3) }}%; width: {{ v.width }}%;">{{ number }}</b>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="sv-info">
+            <div class="sv-text"><span>{{ v.text }}</span></div>
+            <div class="sv-count">
+                <span class="badge">Step <b>{{ v.step + 1 }}</b> of <b>{{ v.total }}</b></span>
+                <span class="badge">Comparisons: <b>{{ v.comparisons }}</b></span>
+                <span class="badge">Moves: <b>{{ v.moves }}</b></span>
+            </div>
+            <div class="sv-progress"><i style="width: {{ v.percent }}%"></i></div>
+        </div>
+
+        <div class="op-row">
+            {% if v.step > 0 %}<a class="sv-btn" href="{{ go(0) }}">⏮ Start</a>{% else %}<span class="sv-btn off">⏮ Start</span>{% endif %}
+            {% if v.step > 0 %}<a class="sv-btn" href="{{ go(v.step - 10) }}">−10</a>{% else %}<span class="sv-btn off">−10</span>{% endif %}
+            {% if v.step > 0 %}<a class="sv-btn" href="{{ go(v.step - 1) }}">◀ Prev</a>{% else %}<span class="sv-btn off">◀ Prev</span>{% endif %}
+
+            {% if sort_play %}
+                <a class="sv-btn" href="{{ go(v.step, 0) }}">⏸ Pause</a>
+            {% elif v.step < v.last %}
+                <a class="sv-btn" href="{{ go(v.step + 1, 1) }}">▶ Play</a>
+            {% else %}
+                <a class="sv-btn" href="{{ go(0, 1) }}">↻ Replay</a>
+            {% endif %}
+
+            {% if v.step < v.last %}<a class="sv-btn" href="{{ go(v.step + 1) }}">Next ▶</a>{% else %}<span class="sv-btn off">Next ▶</span>{% endif %}
+            {% if v.step < v.last %}<a class="sv-btn" href="{{ go(v.step + 10) }}">+10</a>{% else %}<span class="sv-btn off">+10</span>{% endif %}
+            {% if v.step < v.last %}<a class="sv-btn" href="{{ go(v.last) }}">End ⏭</a>{% else %}<span class="sv-btn off">End ⏭</span>{% endif %}
+        </div>
+
+        {% if v.has_depth %}
+        <div class="op-row sv-depth">
+            <span class="sv-depth-label">🔍 Depth</span>
+            <a class="sv-btn {{ 'on' if v.depth_on }}" href="{{ go(v.step, 1 if sort_play else 0, 0, 1) }}">Show depth</a>
+            <a class="sv-btn {{ 'on' if not v.depth_on }}" href="{{ go(v.step, 1 if sort_play else 0, 0, 0) }}">Hide depth</a>
+        </div>
+        {% endif %}
+
+        <div class="sv-speed">
+            <span>🐢 Slow</span>
+            {% for s in range(1, 11) %}
+                <a class="sv-spd {{ 'on' if s == sort_speed }}" href="{{ go(v.step, 1 if sort_play else 0, s) }}">{{ s }}</a>
+            {% endfor %}
+            <span>Fast 🐇</span>
+        </div>
+
+        <details>
+            <summary>Show step-by-step summary ({{ v.milestones|length }} stages). Click a row to jump to it.</summary>
+            {% for m in v.milestones %}
+            <a class="step sv-row {{ 'active' if m.active }}" href="{{ go(m.step) }}">
+                <span class="step-label">{{ m.label }}</span>
+                <span class="chips">
+                    {% for value, ok in m.chips %}<span class="chip {{ 'done' if ok }}">{{ value }}</span>{% endfor %}
+                </span>
+            </a>
+            {% endfor %}
+        </details>
+        </div>
+    {% endif %}
+
+    <!-- COMPARE ALL -->
+    {% if sort_compare %}
+        <h4>All algorithms on the same numbers</h4>
+        <div class="scroll-x">
+            <table class="table">
+                <tr><th>Algorithm</th><th>Comparisons</th><th>Moves</th><th>Time complexity</th></tr>
+                {% for r in sort_compare %}
+                <tr class="{{ 'best' if r.best }}">
+                    <td>{{ r.name }}{% if r.best %} ⭐{% endif %}</td>
+                    <td>{{ r.comparisons }}</td>
+                    <td>{{ r.moves }}</td>
+                    <td>{{ r.complexity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <p class="mini-label">Sorted result</p>
+        <div class="chips">
+            {% for n in sort_sorted %}<span class="chip done">{{ n }}</span>{% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<script>
+
+(function () {
+    var app = document.getElementById('sv-app');
+    if (!app || !window.fetch || !window.DOMParser) return;
+    var timer = null, busy = false;
+
+    function morph(cur, nu) {
+        var a = cur.querySelectorAll('.sv-bar'), b = nu.querySelectorAll('.sv-bar');
+        if (a.length !== b.length) { cur.replaceWith(nu); return; }
+        var stage = cur.querySelector('.sv-stage'), nstage = nu.querySelector('.sv-stage');
+        stage.setAttribute('style', nstage.getAttribute('style'));
+        stage.className = nstage.className;
+        for (var i = 0; i < a.length; i++) {
+            a[i].className = b[i].className.replace(/\bslide\b/, '').trim();
+            a[i].setAttribute('style', b[i].getAttribute('style'));
+            a[i].firstElementChild.textContent = b[i].firstElementChild.textContent;
+        }
+        cur.querySelector('.sv-index').innerHTML = nu.querySelector('.sv-index').innerHTML;
+    }
+
+    function patch(doc) {
+        var nu = doc.getElementById('sv-app');
+        if (!nu) return false;
+        var a = Array.prototype.slice.call(app.children), b = Array.prototype.slice.call(nu.children);
+        if (a.length !== b.length) return false;
+        a.forEach(function (el, i) {
+            if (el.classList.contains('sv-wrap')) { morph(el, b[i]); return; }
+            if (el.tagName === 'DETAILS' && el.open) b[i].open = true;   /* huwag isara ang summary habang nagpa-play */
+            el.replaceWith(b[i]);
+        });
+        app.dataset.next = nu.dataset.next || '';
+        app.dataset.delay = nu.dataset.delay || '';
+        return true;
+    }
+
+    function schedule() {
+        clearTimeout(timer);
+        if (app.dataset.next) {
+            timer = setTimeout(function () { load(app.dataset.next); }, parseFloat(app.dataset.delay || 1) * 1000);
+        }
+    }
+
+    function load(url) {
+        if (busy) return;
+        busy = true;
+        clearTimeout(timer);
+        fetch(url, { credentials: 'same-origin' })
+            .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+            .then(function (html) {
+                if (!patch(new DOMParser().parseFromString(html, 'text/html'))) { window.location.href = url; return; }
+                history.replaceState(null, '', url);
+                busy = false;
+                schedule();
+            })
+            .catch(function () { busy = false; window.location.href = url; });
+    }
+
+    app.addEventListener('click', function (e) {
+        var link = e.target.closest('a.sv-btn, a.sv-spd, a.sv-row');
+        if (!link || e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+        e.preventDefault();
+        load(link.href);
+    });
+
+    schedule();
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Works{% endblock %}
+
+{% block content %}
+<div class="center">
+    <div class="scroll">My Works</div>
+</div>
+
+<div class="cards">
+    {% for w in works %}
+    {% set pic = image_url('works', w.key) %}
+    <a class="work-card" href="{{ url_for(w.endpoint) }}">
+        <div class="card-pic">
+            {% if pic %}<img src="{{ pic }}" alt="{{ w.title }}">{% else %}<span class="ico">{{ w.emoji }}</span>{% endif %}
+        </div>
+        <h3 class="card-title">{{ w.title }}</h3>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

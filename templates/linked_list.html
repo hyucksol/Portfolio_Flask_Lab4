@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Linked List{% endblock %}
+
+{% block content %}
+<a class="back" href="{{ url_for('works') }}">← Back to Works</a>
+
+<div class="center">
+    <div class="scroll">Linked List</div>
+    <p class="subtitle">Insert, search and delete values in a list.</p>
+</div>
+
+<div class="box">
+    <h3>🔗 Linked List</h3>
+    <p class="ops-title">Operations</p>
+
+    {% if ll_message %}
+        <p class="center"><span class="badge">{{ ll_message }}</span></p>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('works_linked_list') }}">
+        <div class="two">
+            <div>
+                <label class="field">Value</label>
+                <input type="text" name="value" placeholder="e.g. 25">
+            </div>
+            <div>
+                <label class="field">After value <small>(for insert in the middle)</small></label>
+                <input type="text" name="after_value" placeholder="e.g. 20">
+            </div>
+        </div>
+
+        <p class="op-label">INSERT</p>
+        <div class="op-row">
+            <button class="op" name="action" value="insert_begin">Insert at beginning</button>
+            <button class="op" name="action" value="insert_end">Insert at end</button>
+            <button class="op" name="action" value="insert_after">Insert after value</button>
+        </div>
+
+        <p class="op-label">SEARCH</p>
+        <div class="op-row">
+            <button class="op" name="action" value="search">Search value</button>
+        </div>
+
+        <p class="op-label">DELETE</p>
+        <div class="op-row">
+            <button class="op btn-remove" name="action" value="delete_first">Delete first</button>
+            <button class="op btn-remove" name="action" value="delete_last">Delete last</button>
+            <button class="op btn-remove" name="action" value="delete_value">Delete value</button>
+        </div>
+
+        <p class="op-label">LIST</p>
+        <div class="op-row">
+            <button class="op" name="action" value="load_sample">Load sample</button>
+            <button class="op" name="action" value="clear">Clear list</button>
+        </div>
+    </form>
+
+    <h4>Current list:</h4>
+    <div class="nodes">
+        {% if ll_items %}
+            <span class="top-tag">HEAD</span>
+            {% for item in ll_items %}
+                <span class="node {{ 'found' if ll_found == loop.index0 }}">🌾 {{ item }}</span>
+            {% endfor %}
+            <span class="null">NULL</span>
+        {% else %}
+            <p><em>List is currently empty.</em></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
